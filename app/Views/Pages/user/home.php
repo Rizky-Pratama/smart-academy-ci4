@@ -35,21 +35,16 @@
 
 <div class="album py-5 bg-light">
   <div class="container">
-
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <?php foreach ($get as $row) : ?>
         <div class="col">
-          <div class="card shadow-sm">
-            <img src="/image.png" style="height: 225px; object-fit: cover;">
+          <div class="card">
+            <img src="/image.png" class="card-img-top" alt="<?= $row->judul ?>">
             <div class="card-body">
-              <h5 class="card-detail"><?= $row->judul ?></h5>
+              <h5 class="card-title"><?= $row->judul ?></h5>
               <p class="card-text"><?= $row->deskripsi ?></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="<?= base_url() ?>/row/<?= $row->id ?>" class="btn btn-sm btn-outline-secondary">View</a>
-                </div>
-                <small class="text-muted"><?= $row->id ?></small>
-              </div>
+              <p class="card-text"><small class="text-muted"><?= $row->tipe ?></small></p>
+              <a href="materi/view/<?= $row->id ?>" class="btn btn-primary">View</a>
             </div>
           </div>
         </div>

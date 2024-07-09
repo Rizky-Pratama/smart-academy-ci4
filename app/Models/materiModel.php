@@ -9,7 +9,7 @@ class materiModel extends Model
     protected $table            = 'materi';
     protected $primaryKey       = 'id';
     protected $returnType       = 'object';
-    protected $allowedField     = ['judul', 'deskripsi', 'tipe', 'video','harga'];
+    protected $allowedField     = ['judul', 'deskripsi', 'tipe', 'video','thumbnail','harga'];
 
     public function getAllData()
     {

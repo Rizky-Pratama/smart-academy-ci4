@@ -55,80 +55,140 @@ class Materi extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
-        $img = $this->request->getFile('vidio');
-        $imgOld = $this->request->getPost('oldvidio');
+        $vidio = $this->request->getFile('vidio');
+        $vidioOld = $this->request->getPost('oldvidio');
 
-        if ($img->getError() == 4) {
-            $rules = [
-                'judul' => [
-                    'rules' => 'required|is_unique[materi.judul,id,' . $id . ']',
-                    'errors' => [
-                        'required' => 'Judul harus diisi',
-                        'is_unique' => 'Judul {value} sudah terdaftar',
-                    ],
+        $thumbnail = $this->request->getFile('thumbnail');
+        $thumbnailOld = $this->request->getPost('oldThumbnail');
+
+        // jika thumbnail di kosongkan maka tidak perlu di validasi
+        // jika thumbnail di isi maka perlu di validasi
+        if ($thumbnail->getError() == 4) {
+            $thumbnailRules = [
+                'rules' => 'max_size[thumbnail,1024]|ext_in[thumbnail,png,jpg,jpeg]',
+                'errors' => [
+                    'max_size' => 'Ukuran gambar terlalu besar',
+                    'ext_in' => 'Format gambar tidak sesuai. Harus {param}',
                 ],
             ];
         } else {
-            $rules = [
-                'judul' => [
-                    'rules' => 'required|is_unique[materi.judul,id,' . $id . ']',
-                    'errors' => [
-                        'required' => 'Judul harus diisi',
-                        'is_unique' => 'Judul {value} sudah terdaftar',
-                    ],
-                ],
-                'vidio' => [
-                    'rules' => 'max_size[vidio,10240]|ext_in[vidio,png,jpg,jpeg]',
-                    'errors' => [
-                        'max_size' => 'Ukuran video terlalu besar',
-                        'ext_in' => 'Format video tidak sesuai. Harus {param}',
-                    ],
+            $thumbnailRules = [
+                'rules' => 'uploaded[thumbnail]|max_size[thumbnail,1024]|ext_in[thumbnail,png,jpg,jpeg]',
+                'errors' => [
+                    'uploaded' => 'Thumbnail harus diisi',
+                    'max_size' => 'Ukuran gambar terlalu besar',
+                    'ext_in' => 'Format gambar tidak sesuai. Harus {param}',
                 ],
             ];
         }
+
+        // jika vidio di kosongkan maka tidak perlu di validasi
+        // jika vidio di isi maka perlu di validasi
+        if ($vidio->getError() == 4) {
+            $vidioRules = [
+                'rules' => 'max_size[vidio,1024]|ext_in[vidio,png,jpg,jpeg]',
+                'errors' => [
+                    'max_size' => 'Ukuran gambar terlalu besar',
+                    'ext_in' => 'Format gambar tidak sesuai. Harus {param}',
+                ],
+            ];
+        } else {
+            $vidioRules = [
+                'rules' => 'uploaded[vidio]|max_size[vidio,20480]|ext_in[vidio,mp4]',
+                'errors' => [
+                    'uploaded' => 'Video harus diisi',
+                    'max_size' => 'Ukuran video terlalu besar, max 20mb',
+                    'ext_in' => 'Format video tidak sesuai. Harus {param}',
+                ],
+            ];
+        }
+        // if ($vidio->getError() == 4) {
+        //     $rules = [
+        //         'judul' => [
+        //             'rules' => 'required|is_unique[materi.judul,id,' . $id . ']',
+        //             'errors' => [
+        //                 'required' => 'Judul harus diisi',
+        //                 'is_unique' => 'Judul {value} sudah terdaftar',
+        //             ],
+        //         ],
+        //     ];
+        // } else {
+        //     $rules = [
+        //         'judul' => [
+        //             'rules' => 'required|is_unique[materi.judul,id,' . $id . ']',
+        //             'errors' => [
+        //                 'required' => 'Judul harus diisi',
+        //                 'is_unique' => 'Judul {value} sudah terdaftar',
+        //             ],
+        //         ],
+        //         'vidio' => [
+        //             'rules' => 'max_size[vidio,10240]|ext_in[vidio,png,jpg,jpeg]',
+        //             'errors' => [
+        //                 'max_size' => 'Ukuran video terlalu besar',
+        //                 'ext_in' => 'Format video tidak sesuai. Harus {param}',
+        //             ],
+        //         ],
+        //     ];
+        // }
+
+        $rules = [
+            'judul' => [
+                'rules' => 'required|is_unique[materi.judul,id,' . $id . ']',
+                'errors' => [
+                    'required' => 'Judul harus diisi',
+                    'is_unique' => 'Judul {value} sudah terdaftar',
+                ],
+            ],
+            'thumbnail' => $thumbnailRules,
+            'vidio' => $vidioRules,
+        ];
 
         if (!$this->validate($rules)) {
             session()->setFlashdata('errors', $this->validator->getErrors());
             return redirect()->to('/materi/edit/' . $id)->withInput();
         }
 
-        if ($img->getError() == 4) {
-            $data = array(
-                'judul' => $this->request->getPost('judul'),
-                'deskripsi' => $this->request->getPost('deskripsi'),
-                'tipe' => $this->request->getPost('tipe'),
-                'harga' => $this->request->getPost('harga'),
-            );
-
-            $model->updateData($data, $id);
-            session()->setFlashdata('success', 'Data berhasil diubah');
-            return redirect()->to('/materi');
-        } else {
-            $name = $img->getRandomName();
-            $data = array(
-                'judul' => $this->request->getPost('judul'),
-                'deskripsi' => $this->request->getPost('deskripsi'),
-                'tipe' => $this->request->getPost('tipe'),
-                'harga' => $this->request->getPost('harga'),
-                'video' => $name
-            );
-        }
-
-        $img = $this->request->getFile('vidio');
-        $name = $img->getRandomName();
-
         $data = array(
             'judul' => $this->request->getPost('judul'),
             'deskripsi' => $this->request->getPost('deskripsi'),
             'tipe' => $this->request->getPost('tipe'),
-            'harga' => $this->request->getPost('harga'),
-            'video' => $name
+            'harga' => $this->request->getPost('harga')
         );
 
+        if (!$vidio->getError() == 4) {
+
+            $vidio = $this->request->getFile('vidio');
+            $nameVidio = $vidio->getRandomName();
+
+            $data['video'] = $nameVidio;
+        }
+
+        if (!$thumbnail->getError() == 4) {
+
+            $thumbnail = $this->request->getFile('thumbnail');
+            $nameThumbnail = $thumbnail->getRandomName();
+
+            $data['thumbnail'] = $nameThumbnail;
+        }
+
+        // $data = array(
+        //     'judul' => $this->request->getPost('judul'),
+        //     'deskripsi' => $this->request->getPost('deskripsi'),
+        //     'tipe' => $this->request->getPost('tipe'),
+        //     'harga' => $this->request->getPost('harga')
+        // );
+        // dd($data);
+
         $model->updateData($data, $id);
-        if (!$img->hasMoved()) {
-            $img->move("uploads", $name);
-            unlink("uploads/" . $imgOld);
+
+        if (!$thumbnail->getError() == 4) {
+            $thumbnail->move("thumbnail", $nameThumbnail);
+            unlink("thumbnail/" . $thumbnailOld);
+        }
+
+        if (!$vidio->getError() == 4) {
+            $vidio->move("vidio", $nameVidio);
+            unlink("vidio/" . $vidioOld);
         }
 
         session()->setFlashdata('success', 'Data berhasil diubah');
@@ -146,11 +206,19 @@ class Materi extends BaseController
                     'is_unique' => 'Judul {value} sudah terdaftar',
                 ],
             ],
-            'vidio' => [
-                'rules' => 'uploaded[vidio]|max_size[vidio,1024]|ext_in[vidio,png,jpg,jpeg]',
+            'thumbnail' => [
+                'rules' => 'uploaded[thumbnail]|max_size[thumbnail,1024]|ext_in[thumbnail,png,jpg,jpeg]',
                 'errors' => [
                     'uploaded' => 'Video harus diisi',
-                    'max_size' => 'Ukuran video terlalu besar',
+                    'max_size' => 'Ukuran gambar terlalu besar, max 1mb',
+                    'ext_in' => 'Format video tidak sesuai. Harus {param}',
+                ],
+            ],
+            'vidio' => [
+                'rules' => 'uploaded[vidio]|max_size[vidio,20480]|ext_in[vidio,mp4]',
+                'errors' => [
+                    'uploaded' => 'Video harus diisi',
+                    'max_size' => 'Ukuran video terlalu besar, max 20mb',
                     'ext_in' => 'Format video tidak sesuai. Harus {param}',
                 ],
             ],
@@ -161,8 +229,11 @@ class Materi extends BaseController
             return redirect()->to('/materi/add')->withInput();
         }
 
-        $img = $this->request->getFile('vidio');
-        $name = $img->getRandomName();
+        $thumbnail = $this->request->getFile('thumbnail');
+        $thumbnailName = $thumbnail->getRandomName();
+
+        $vidio = $this->request->getFile('vidio');
+        $vidioName = $vidio->getRandomName();
 
         $model = new \App\Models\materiModel();
         $data = array(
@@ -170,12 +241,18 @@ class Materi extends BaseController
             'deskripsi' => $this->request->getPost('deskripsi'),
             'tipe' => $this->request->getPost('tipe'),
             'harga' => $this->request->getPost('harga'),
-            'video' => $name
+            'thumbnail' => $thumbnailName,
+            'video' => $vidioName,
         );
 
         $model->insertData($data);
-        if (!$img->hasMoved()) {
-            $img->move("uploads", $name);
+
+        if (!$vidio->hasMoved()) {
+            $vidio->move("vidio", $vidioName);
+        }
+
+        if (!$thumbnail->hasMoved()) {
+            $thumbnail->move("thumbnail", $thumbnailName);
         }
 
         session()->setFlashdata('success', 'Data berhasil ditambahkan');
@@ -185,8 +262,19 @@ class Materi extends BaseController
     public function Delete($id)
     {
         $model = new \App\Models\materiModel();
+
+        $get = $model->getData($id);
+        if (!$get) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        $thumbnail = $get->thumbnail;
+        $vidio = $get->video;
+
         $model->deleteData($id);
 
+        unlink("thumbnail/" . $thumbnail);
+        unlink("vidio/" . $vidio);
         session()->setFlashdata('success', 'Data berhasil dihapus');
         return redirect()->to('/materi');
     }

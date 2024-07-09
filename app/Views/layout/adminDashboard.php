@@ -221,6 +221,23 @@
     }
   </script>
   <script>
+    function displayVideo(event) {
+      const file = event.target.files[0];
+      const videoPlayer = document.querySelector('video');
+      const videoSource = document.querySelector('source');
+
+      console.log(file);
+      console.log(videoPlayer);
+      console.log(videoSource);
+
+      if (file) {
+        const fileURL = URL.createObjectURL(file);
+        videoSource.src = fileURL;
+        videoPlayer.load();
+      }
+    }
+  </script>
+  <script>
     $(function() {
       $("#example1").DataTable();
       $('.select2').select2();

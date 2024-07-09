@@ -10,13 +10,14 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive">
-        <table id="example1" class="table table-bordered table-striped">
+        <table id="example1" class="table table-bordered table-striped" style="width: max-content;">
           <thead>
             <tr>
               <th>No</th>
               <th>Judul Materi</th>
               <th style="max-width: 200px;">Deskripsi</th>
               <th>Tipe</th>
+              <th>Thumbnail</th>
               <th>Vidio</th>
               <th>Harga</th>
               <th>Option</th>
@@ -31,9 +32,18 @@
                 <td><?= $row->deskripsi ?></td>
                 <td><?= $row->tipe ?></td>
                 <td>
-                  <img class="object-fit-contain" style="height: 200px;" src="uploads/<?= $row->video ?>" alt="<?= $row->judul ?>">
+                  <img class="object-fit-contain" style="height: 200px;" src="thumbnail/<?= $row->thumbnail ?>" alt="<?= $row->judul ?>">
                 </td>
-                <td><?= $row->harga ?></td>
+                <td>
+                  <video width="320" height="240" controls>
+                    <source src="vidio/<?= $row->video ?>" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </td>
+                <td>
+                  <!-- tampilkan harga dengan format rupiah -->
+                  <?= "Rp " . number_format($row->harga, 2, ',', '.'); ?>
+                </td>
                 <td>
                   <a href="/materi/edit/<?= $row->id ?>" class="btn btn-warning">Edit</a>
                   <form action="/materi/delete/<?= $row->id ?>" class="d-inline" method="post">
@@ -48,6 +58,7 @@
               <th>Judul Materi</th>
               <th>Deskripsi</th>
               <th>Tipe</th>
+              <th>Thumbnail</th>
               <th>Vidio</th>
               <th>Harga</th>
               <th>Option</th>

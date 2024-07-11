@@ -27,30 +27,34 @@
           </thead>
           <tbody>
             <?php $no = 1;
+            // dd($get);
             foreach ($get as $row) { ?>
+              <?php
+              // dd($row[]);
+              ?>
               <tr>
                 <td><?= $no++; ?></td>
-                <td><?= $row->username ?></td>
-                <td><?= $row->judul_materi ?></td>
-                <td><?= $row->nama_bank ?></td>
-                <td><?= $row->nomor_rekening ?></td>
-                <td><?= $row->total_transaksi ?></td>
-                <td><?= $row->tanggal_transaksi ?></td>
+                <td><?= $row['username'] ?></td>
+                <td><?= $row['judul_materi'] ?></td>
+                <td><?= $row['nama_bank'] ?></td>
+                <td><?= $row['nomor_rekening'] ?></td>
+                <td><?= $row['total_transaksi'] ?></td>
+                <td><?= $row['tanggal_transaksi'] ?></td>
                 <td>
                   <!-- beberapa status transaksi 'belum_dibayar', 'sukses', 'gagal', 'dibatalkan' -->
-                  <?php if ($row->status_transaksi == "sukses") : ?>
-                    <span class="badge badge-success"><?= $row->status_transaksi ?></span>
-                  <?php elseif ($row->status_transaksi == "gagal") : ?>
-                    <span class="badge badge-danger"><?= $row->status_transaksi ?></span>
-                  <?php elseif ($row->status_transaksi == "dibatalkan") : ?>
-                    <span class="badge badge-danger"><?= $row->status_transaksi ?></span>
-                  <?php elseif ($row->status_transaksi == "belum_dibayar") : ?>
-                    <span class="badge badge-secondary"><?= $row->status_transaksi ?></span>
+                  <?php if ($row['status_transaksi'] == "sukses") : ?>
+                    <span class="badge badge-success"><?= $row['status_transaksi'] ?></span>
+                  <?php elseif ($row['status_transaksi'] == "gagal") : ?>
+                    <span class="badge badge-danger"><?= $row['status_transaksi'] ?></span>
+                  <?php elseif ($row['status_transaksi'] == "dibatalkan") : ?>
+                    <span class="badge badge-danger"><?= $row['status_transaksi'] ?></span>
+                  <?php elseif ($row['status_transaksi'] == "belum_dibayar") : ?>
+                    <span class="badge badge-secondary"><?= $row['status_transaksi'] ?></span>
                   <?php endif; ?>
                 </td>
                 <td>
-                  <a href="/materi/edit/<?= $row->id ?>" class="btn btn-warning">Edit</a>
-                  <form action="/materi/delete/<?= $row->id ?>" class="d-inline" method="post">
+                  <a href="/materi/edit/<?= $row['transaksi_id'] ?>" class="btn btn-warning">Edit</a>
+                  <form action="/materi/delete/<?= $row['transaksi_id'] ?>" class="d-inline" method="post">
                     <button type="submit" class="btn btn-danger">Delete</button>
                   </form>
                 </td>

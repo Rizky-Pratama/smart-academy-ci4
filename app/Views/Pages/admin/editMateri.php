@@ -25,7 +25,7 @@ if (session()->getFlashdata('errors')) {
     <div class="card">
       <form role="form" action="/materi/edit/<?= $get->id ?>" method="post" enctype="multipart/form-data">
         <div class="card-header">
-          <h3 class="card-title">Tambah Materi</h3>
+          <h3 class="card-title">Edit Materi</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->

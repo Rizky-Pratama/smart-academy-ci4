@@ -102,13 +102,30 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a href="/transaksi" class="nav-link <?= in_array("transaksi", $menu) ? "active" : "" ?>">
+            <li class="nav-item has-treeview <?= in_array("transaksi", $menu) ? "menu-open" : "" ?>">
+              <a class="nav-link <?= in_array("transaksi", $menu) ? "active" : "" ?>">
                 <i class="nav-icon fas fa-landmark"></i>
                 <p>
-                  Transaksi
+                  Managemen Transaksi
+                  <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/transaksi" class="nav-link <?= in_array("dataTransaksi", $menu) ? "active" : "" ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Data Transaksi</p>
+                  </a>
+                </li>
+              </ul>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/rekening" class="nav-link <?= in_array("dataRekening", $menu) ? "active" : "" ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Data Rekening</p>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               <a href="/logout" class="nav-link">

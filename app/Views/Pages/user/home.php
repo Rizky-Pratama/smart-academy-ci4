@@ -12,15 +12,13 @@
 
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
   <div class="col-md-5 p-lg-5 mx-auto my-5">
-    <h1 class="display-4 fw-normal">Punny headline</h1>
-    <p class="lead fw-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with this example based on Apple’s marketing pages.</p>
-    <a class="btn btn-outline-secondary" href="#">Coming soon</a>
+    <h1 class="display-4 fw-normal">Welcome</h1>
   </div>
   <div class="product-device box-shadow d-none d-md-block"></div>
   <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
 </div>
 
-<section class="py-5 text-center container">
+<!-- <section class="py-5 text-center container">
   <div class="row py-lg-5">
     <div class="col-lg-6 col-md-8 mx-auto">
       <h1 class="fw-light">Album example</h1>
@@ -31,7 +29,7 @@
       </p>
     </div>
   </div>
-</section>
+</section> -->
 
 <div class="album py-5 bg-light">
   <div class="container">
@@ -39,7 +37,7 @@
       <?php foreach ($get as $row) : ?>
         <div class="col">
           <div class="card">
-            <img src="/image.png" class="card-img-top" alt="<?= $row->judul ?>">
+            <img src="thumbnail/<?= $row->thumbnail ?>" class="card-img-top" alt="<?= $row->judul ?>" style="max-height: 200px;">
             <div class="card-body">
               <h5 class="card-title"><?= $row->judul ?></h5>
               <p class="card-text"><?= $row->deskripsi ?></p>

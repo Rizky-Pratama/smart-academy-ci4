@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\Files\File;
 
 class Materi extends BaseController
 {
@@ -39,7 +38,7 @@ class Materi extends BaseController
         }
 
         $data = array(
-            'title' => 'Edit Materi',
+            'title' => 'Management Materi',
             'menu' => ['masterData', 'dataMateri'],
             'get' => $get,
         );
@@ -102,34 +101,6 @@ class Materi extends BaseController
                 ],
             ];
         }
-        // if ($vidio->getError() == 4) {
-        //     $rules = [
-        //         'judul' => [
-        //             'rules' => 'required|is_unique[materi.judul,id,' . $id . ']',
-        //             'errors' => [
-        //                 'required' => 'Judul harus diisi',
-        //                 'is_unique' => 'Judul {value} sudah terdaftar',
-        //             ],
-        //         ],
-        //     ];
-        // } else {
-        //     $rules = [
-        //         'judul' => [
-        //             'rules' => 'required|is_unique[materi.judul,id,' . $id . ']',
-        //             'errors' => [
-        //                 'required' => 'Judul harus diisi',
-        //                 'is_unique' => 'Judul {value} sudah terdaftar',
-        //             ],
-        //         ],
-        //         'vidio' => [
-        //             'rules' => 'max_size[vidio,10240]|ext_in[vidio,png,jpg,jpeg]',
-        //             'errors' => [
-        //                 'max_size' => 'Ukuran video terlalu besar',
-        //                 'ext_in' => 'Format video tidak sesuai. Harus {param}',
-        //             ],
-        //         ],
-        //     ];
-        // }
 
         $rules = [
             'judul' => [
@@ -170,14 +141,6 @@ class Materi extends BaseController
 
             $data['thumbnail'] = $nameThumbnail;
         }
-
-        // $data = array(
-        //     'judul' => $this->request->getPost('judul'),
-        //     'deskripsi' => $this->request->getPost('deskripsi'),
-        //     'tipe' => $this->request->getPost('tipe'),
-        //     'harga' => $this->request->getPost('harga')
-        // );
-        // dd($data);
 
         $model->updateData($data, $id);
 

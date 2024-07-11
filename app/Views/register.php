@@ -21,38 +21,51 @@
 </head>
 
 <body class="hold-transition register-page">
+  <?php
+  if (session()->getFlashdata('errors')) {
+    $errors = session()->getFlashdata('errors');
+  }
+  ?>
   <div class="register-box">
     <div class="register-logo">
-      <a href=""><b>Admin</b>LTE</a>
+      Smart Academy
     </div>
 
     <div class="card">
       <div class="card-body register-card-body">
         <p class="login-box-msg">Register a new membership</p>
-
         <form action="register" method="post" id="form">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Username" name="username" required>
+            <input type="text" class="form-control <?= isset($errors["username"]) ? "is-invalid" : "" ?>" placeholder="Username" name="username" value="<?= old("username") ?>" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
             </div>
+            <div class="invalid-feedback">
+              <?= isset($errors["username"]) ? $errors["username"] : "" ?>
+            </div>
           </div>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email" name="email" required>
+            <input type="email" class="form-control <?= isset($errors["email"]) ? "is-invalid" : "" ?>" placeholder="Email" name="email" value="<?= old("email") ?>" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
+            <div class="invalid-feedback">
+              <?= isset($errors["email"]) ? $errors["email"] : "" ?>
+            </div>
           </div>
           <div class="input-group mb-3">
-            <input id="pw1" type="password" class="form-control" placeholder="Password" name="password" required>
+            <input id="pw1" type="password" class="form-control <?= isset($errors["password"]) ? "is-invalid" : "" ?>" placeholder="Password" name="password" value="<?= old("password") ?>" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
+            </div>
+            <div class="invalid-feedback">
+              <?= isset($errors["password"]) ? $errors["password"] : "" ?>
             </div>
           </div>
           <div class="row">

@@ -14,7 +14,7 @@ class Transaksi extends BaseController
 
     $data = array(
       'title' => 'Management Transaksi',
-      'menu' => ['transaksi', 'data_transaksi'],
+      'menu' => ['transaksi', 'dataTransaksi'],
       'get' => $get,
     );
     return view('pages/admin/transaksi', $data);

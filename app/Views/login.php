@@ -21,29 +21,49 @@
 </head>
 
 <body class="hold-transition login-page">
+  <?php
+  if (session()->getFlashdata('errors')) {
+    $errors = session()->getFlashdata('errors');
+  }
+  ?>
   <div class="login-box">
     <div class="login-logo">
       <img src="<?php base_url() ?>/smart.png" height="150" />
     </div>
-    <!-- /.login-logo -->
+    <?php if (session()->getFlashdata('success')) : ?>
+      <div class="alert alert-success" role="alert">
+        <?= session()->getFlashdata("success") ?>
+      </div>
+    <?php endif; ?>
+    <?php if (session()->getFlashdata('error')) : ?>
+      <div class="alert alert-danger" role="alert">
+        <?= session()->getFlashdata("error") ?>
+      </div>
+    <?php endif; ?>
     <div class="card">
       <div class="card-body login-card-body">
         <p>Login</p>
         <form action="login" method="post">
           <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control" placeholder="Email">
+            <input type="email" name="email" class="form-control <?= isset($errors["email"]) ? "is-invalid" : "" ?>" placeholder="Email" value="<?= old("email") ?>">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
+            <div class="invalid-feedback">
+              <?= isset($errors["email"]) ? $errors["email"] : "" ?>
+            </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control" placeholder="Password">
+            <input type="password" name="password" class="form-control <?= isset($errors["password"]) ? "is-invalid" : "" ?>" placeholder="Password" value="<?= old("password") ?>">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
+            </div>
+            <div class="invalid-feedback">
+              <?= isset($errors["password"]) ? $errors["password"] : "" ?>
             </div>
           </div>
           <button type="submit" class="btn btn-primary btn-block">Sign In</button>
@@ -52,11 +72,9 @@
           </div>
         </form>
       </div>
-      <!-- /.login-card-body -->
     </div>
   </div>
-  <!-- /.login-box -->
-
+  
   <!-- jQuery -->
   <script src="<?php base_url() ?>/template/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->

@@ -32,6 +32,7 @@
   <!-- <link rel="stylesheet" href="<?php base_url() ?>/template/plugins/summernote/summernote-bs4.css"> -->
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -49,8 +50,8 @@
 
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
-        <img src="<?php base_url() ?>/smart.png" height="50" class="img-circle elevation-2" />
+      <a href="/dashboard" class="brand-link">
+        <img src="<?php base_url() ?>/logo.png" height="50" />
       </a>
 
       <!-- Sidebar -->
@@ -61,7 +62,7 @@
             <img src="/avatar/default.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block"><?= session('username'); ?></a>
+            <a href="/dashboard" class="d-block"><?= session('username'); ?></a>
           </div>
         </div>
 
@@ -123,6 +124,14 @@
                   <a href="/rekening" class="nav-link <?= in_array("dataRekening", $menu) ? "active" : "" ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Data Rekening</p>
+                  </a>
+                </li>
+              </ul>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/bukti_pembayaran" class="nav-link <?= in_array("buktiPembayaran", $menu) ? "active" : "" ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Bukti Pembayaran</p>
                   </a>
                 </li>
               </ul>
@@ -223,8 +232,12 @@
   <script src="<?php base_url() ?>/template/dist/js/adminlte.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="<?php base_url() ?>/template/dist/js/pages/dashboard.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
   <script>
+    Fancybox.bind("[data-fancybox]", {
+      ClickAction: false,
+    });
+
     function preview() {
       const file = document.querySelector('input[type=file]').files[0];
       const preview = document.querySelector('#img-preview');

@@ -13,6 +13,7 @@ use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 use \App\Filters\AdminFilter;
+use \App\Filters\IsLoginFilter;
 
 class Filters extends BaseFilters
 {
@@ -36,6 +37,7 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'admin'         => AdminFilter::class,
+        'islogin'       => IsLoginFilter::class,
     ];
 
     /**
@@ -107,6 +109,15 @@ class Filters extends BaseFilters
      * @var array<string, array<string, list<string>>>
      */
     public array $filters = [
-        'admin' => ['before' => ['dashboard', 'materi/*', 'membership/*', 'pengguna/*', 'hapususer/*']],
+        'admin' => [
+            'before' => [
+                'dashboard', 'materi', 'pengguna', 'transaksi', 'bukti_pembayaran', 'rekening', 'materi/*', 'pengguna/*', 'transaksi/*', 'rekening/*', 'hapususer/*'
+            ]
+        ],
+        'islogin' => [
+            'before' => [
+                'checkout/*', 'transaction', 'bukti/*'
+            ]
+        ],
     ];
 }

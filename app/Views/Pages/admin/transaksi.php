@@ -22,7 +22,6 @@
               <th>Total Transaksi</th>
               <th>Tanggal Transaksi</th>
               <th>Status Transaksi</th>
-              <th>Option</th>
             </tr>
           </thead>
           <tbody>
@@ -52,12 +51,6 @@
                     <span class="badge badge-secondary"><?= $row['status_transaksi'] ?></span>
                   <?php endif; ?>
                 </td>
-                <td>
-                  <a href="/materi/edit/<?= $row['transaksi_id'] ?>" class="btn btn-warning">Edit</a>
-                  <form action="/materi/delete/<?= $row['transaksi_id'] ?>" class="d-inline" method="post">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                  </form>
-                </td>
               </tr>
             <?php } ?>
           <tfoot>
@@ -70,7 +63,6 @@
               <th>Total Transaksi</th>
               <th>Tanggal Transaksi</th>
               <th>Status Transaksi</th>
-              <th>Option</th>
             </tr>
           </tfoot>
         </table>

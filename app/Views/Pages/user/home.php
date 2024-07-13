@@ -1,14 +1,6 @@
 <?= $this->extend('layout/userDashboard') ?>
 
 <?= $this->section('content') ?>
-<?php if (session()->getFlashdata('success')) : ?>
-  <div class="alert alert-success" role="alert">
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <?= session()->getFlashdata('success') ?>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  </div>
-<?php endif; ?>
 
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
   <div class="col-md-5 p-lg-5 mx-auto my-5">
@@ -42,7 +34,7 @@
               <h5 class="card-title"><?= $row->judul ?></h5>
               <p class="card-text"><?= $row->deskripsi ?></p>
               <p class="card-text"><small class="text-muted"><?= $row->tipe ?></small></p>
-              <a href="materi/view/<?= $row->id ?>" class="btn btn-primary">View</a>
+              <a href="course/<?= $row->id ?>" class="btn btn-primary">View</a>
             </div>
           </div>
         </div>
